@@ -1,0 +1,15 @@
+PyMySQL
+WTForms
+flask
+flask_assets
+flask_login
+flask_sqlalchemy
+
+[dev]
+check-manifest
+
+[env]
+python-dotenv
+
+[test]
+coverage

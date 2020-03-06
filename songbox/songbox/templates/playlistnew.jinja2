@@ -1,0 +1,73 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+    <link href="{{ url_for('static', filename='dist/css/account.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+  <div class="formwrapper">
+    <form method="POST">
+
+      <div class="logo">
+        <img src="{{ url_for('static', filename='dist/img/logo.png') }}">
+      </div>
+
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+      {% endfor %}
+
+      {{ form.csrf_token }}
+
+      <h1>Playlist Details</h1>
+
+      <fieldset class="sequence">
+        {{ form.sequence.label }}
+        {{ form.sequence(placeholder='999') }}
+        {% if form.sequence.errors %}
+          <ul class="errors">
+            {% for error in form.sequence.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="name">
+        {{ form.name.label }}
+        {{ form.name(placeholder='My Corona Playlist') }}
+        {% if form.name.errors %}
+          <ul class="errors">
+            {% for error in form.name.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="song_id">
+        {{ form.song_id.label }}
+        {{ form.song_id(placeholder='999') }}
+        {% if form.song_id.errors %}
+          <ul class="errors">
+            {% for error in form.song_id.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="user_id">
+        {{ form.user_id.label }}
+        {{ form.user_id(placeholder='999') }}
+        {% if form.user_id.errors %}
+          <ul class="errors">
+            {% for error in form.user_id.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+      <div class="submitbutton">
+        <input id="submit" type="submit" value="Submit">
+      </div>
+
+    </form>
+
+  </div>
+{% endblock %}

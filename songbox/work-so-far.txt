@@ -1,0 +1,96 @@
+Flast Training Application.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+This Flask application is based on
+	https://hackersandslackers.com/flask-login-user-authentication/
+with some bug fixes and quite a lot of modification.
+
+
+
+
+Changes Made.
+~~~~~~~~~~~~~
+Upgraded Python to version 3.6.2.
+Relinked Python binaries to allow working with Ubuntu 14.0.
+Upgraded Pip.
+
+Changed database connection string to use pymysql adapter instead of MySQLdb.
+Added CSRF tokens in templates to make compatible with Chromium, Firefox etc (was causing forms to fail).
+Fixed various "attribute not found" errors in form handling in auth.py.
+Fixed compiling of main css files from "less" language files (installed cssmin).
+Proved now working with MySQL and Sqlite3.
+Renamed package to "songbox".
+Added model, templates and route for CRUD interface on the "user" table.
+
+
+
+Create Python Virtual Environment.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mkdir songbox
+cd songbox
+sudo apt-get update
+sudo apt-get install python3-venv
+python3 -m venv venv
+. venv/bin/activate
+
+
+Install Flask and other modules.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pip install pymysql
+pip install flask flask-login flask-sqlalchemy flask-wtf
+pip install cssmin
+
+
+Get and setup the example software.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+git clone https://github.com/hackersandslackers/flasklogin-tutorial.git
+cd flasklogin-tutorial
+python3 setup.py install
+
+
+Set up the database.
+~~~~~~~~~~~~~~~~~~~~
+sudo apt-get install mysql-server (set the mysql root password during installation)
+sudo apt-get install mysql-client
+
+Optionally edit "/etc/mysql/my.cnf" to set up logging etc.
+
+sudo systemctl start mysql
+	or
+sudo service mysql start
+
+mysql -u root -p
+create database songbox;
+GRANT ALL PRIVILEGES ON *.* TO 'songbox'@'localhost' IDENTIFIED BY 'songbox';
+
+
+Set up the SQL Alchemy database connection.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+vi songbox/flasklogin-tutorial/start.sh 
+	(NOTE: later the name of the package was changed from "flasklogin-tutorial" to "songbox")
+Change the connection string
+	export SQLALCHEMY_DATABASE_URI=mysql+pymysql://songbox:songbox@localhost/songbox
+Add the encryption key (used by Flask for various purposes including password encryption and CSRF tokens)
+	export SECRET_KEY=abc123qwerty (should be longer and more random than this!)
+
+
+Future Security Considerations.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In future change "FLASK_ENV=development" to "FLASK_ENV=production" in start.sh.
+Switch off debugging in start.sh (export FLASK_DEBUG=0)
+Use WSGI connection with a webserver frontend (e.g Nginx or Apache).
+Run database on different server to the Flask application.
+
+
+Convert the application into a Python Package.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+....
+....
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+  <link href="{{ url_for('static', filename='dist/css/dashboard.css') }}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.typekit.net/sus7rlu.css">
+{% endblock %}
+
+{% block content %}
+
+	<style>
+		table, th, td {
+		border: 1px solid black;
+		padding: 5px;
+
+ 		.action {
+			background-color: #1c87c9;
+			border: none;
+			color: white;
+			padding: 20px 34px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 20px;
+			margin: 4px 2px;
+			cursor: pointer;
+         	}
+	</style>
+
+    {% if current_user.is_authenticated %}
+
+	<h2>Playlist Administration</h2>
+        <table style="width:100%">
+            <thead><tr><th>Item ID</th><th>Sequence</th><th>Name</th><th>Song ID</th><th>User ID</th><th>Action</th></tr></thead>
+            <tbody>
+                {% for playlist in playlistdata %}
+                    <tr>
+			<td>{{playlist.item_id}}</td>
+			<td>{{playlist.sequence}}</td>
+			<td>{{playlist.name}}</td>
+			<td>{{playlist.song_id}}</td>
+			<td>{{playlist.user_id}}</td>
+			<td>
+				<a href="/playlistadmin?action=Edit&item_id={{playlist.item_id}}" class="action">Edit</a>
+				<a href="/playlistadmin?action=Delete&item_id={{playlist.item_id}}" class="action">Delete</a>
+			</td>
+		    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+	<button onclick="window.location.href = '/playlistadmin?action=New&item_id=0';">
+		 Add a Song
+	</button>
+
+    {% endif %}
+
+{% endblock %}

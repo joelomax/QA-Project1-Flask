@@ -1,0 +1,57 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+  <link href="{{ url_for('static', filename='dist/css/dashboard.css') }}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://use.typekit.net/sus7rlu.css">
+{% endblock %}
+
+{% block content %}
+
+	<style>
+		table, th, td {
+		border: 1px solid black;
+		padding: 5px;
+
+ 		.action {
+			background-color: #1c87c9;
+			border: none;
+			color: white;
+			padding: 20px 34px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 20px;
+			margin: 4px 2px;
+			cursor: pointer;
+         	}
+	</style>
+
+    {% if current_user.is_authenticated %}
+
+	<h2>User Administration</h2>
+        <table style="width:100%">
+            <thead><tr><th>Id</th><th>Name</th><th>Email</th><th>Created On</th><th>Last Login</th><th>Actions</th></tr></thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+			<td>{{user.id}}</td>
+			<td>{{user.name}}</td>
+			<td>{{user.email}}</td>
+			<td>{{user.created_on}}</td>
+			<td>{{user.last_login}}</td>
+			<td>
+				<a href="/useradmin?action=Edit&id={{user.id}}" class="action">Edit</a>
+				<a href="/useradmin?action=Delete&id={{user.id}}" class="action">Delete</a>
+			</td>
+		    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+	<button onclick="window.location.href = '/useradmin?action=New&id=0';">
+		New User
+	</button>
+
+    {% endif %}
+
+{% endblock %}
