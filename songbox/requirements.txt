@@ -8,7 +8,6 @@ Flask-WTF==0.14.3
 itsdangerous==1.1.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1
-pkg-resources==0.0.0
 PyMySQL==0.9.3
 SQLAlchemy==1.3.13
 webassets==2.0
